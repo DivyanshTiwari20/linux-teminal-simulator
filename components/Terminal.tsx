@@ -106,60 +106,63 @@ const Terminal: React.FC<TerminalProps> = ({ history, isLoading, onCommandSubmit
   };
 
   return (
-    <div className="h-full flex flex-col">
-      {/* Title Bar */}
-      <div className="bg-gray-800 px-4 py-2 flex items-center justify-between border-b border-gray-700">
-        <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
-        </div>
-        <div className="text-gray-300 text-sm">linux@terminal: {getDisplayPath(cwd)} | by divyansh.</div>
-        <div className="w-16"></div>
-      </div>
-
-      {/* Terminal Content */}
-      <div
-        className="flex-1 p-2 md:p-4 overflow-y-auto text-sm md:text-base selection:bg-green-600 selection:text-white"
-        onClick={handleTerminalClick}
-      >
-        {history.map((item) => (
-          <div key={item.id} className="whitespace-pre-wrap break-words leading-relaxed">
-            {item.type === 'command' ? (
-              <div className="flex items-center">
-                <span className="text-ubuntu-green">user@linux</span>
-                <span className="text-ubuntu-text">:</span>
-                <span className="text-ubuntu-blue">{item.prompt}</span>
-                <span className="text-ubuntu-text">$ </span>
-                <span className="flex-shrink min-w-0">{item.text}</span>
-              </div>
-            ) : (
-              <span className="text-ubuntu-text">{item.text}</span>
-            )}
+    <div className="h-screen w-screen bg-gradient-to-br from-orange-900 via-blue-900 to-yellow-900 flex items-center justify-center p-6">
+      <div className="w-[100%] h-[100%] flex flex-col rounded-lg shadow-2xl overflow-hidden">
+        {/* Title Bar */}
+        <div className="bg-gray-800 px-4 py-2 flex items-center justify-between border-b border-gray-700">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
           </div>
-        ))}
+          <div className="text-gray-300 text-sm">user@ubuntu: {getDisplayPath(cwd)} | by divyansh.</div>
+          <div className="w-16"></div>
+        </div>
 
-        {!isLoading && (
-          <form onSubmit={handleSubmit} className="flex items-center">
-            <Prompt cwd={cwd} />
-            <input
-              ref={inputRef}
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="bg-transparent border-none text-ubuntu-text focus:outline-none w-full"
-              autoFocus
-              disabled={isLoading}
-              autoCapitalize="none"
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck="false"
-            />
-          </form>
-        )}
-        
-        <div ref={terminalEndRef} />
+        {/* Terminal Content */}
+   <div
+  className="flex-1 p-2 md:p-4 overflow-y-auto text-sm md:text-base selection:bg-green-600 selection:text-white bg-[#300a24]"
+  onClick={handleTerminalClick}
+  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+>
+          {history.map((item) => (
+            <div key={item.id} className="whitespace-pre-wrap break-words leading-relaxed">
+              {item.type === 'command' ? (
+                <div className="flex items-center">
+                  <span className="text-ubuntu-green">user@linux</span>
+                  <span className="text-ubuntu-text">:</span>
+                  <span className="text-ubuntu-blue">{item.prompt}</span>
+                  <span className="text-ubuntu-text">$ </span>
+                  <span className="flex-shrink min-w-0">{item.text}</span>
+                </div>
+              ) : (
+                <span className="text-ubuntu-text">{item.text}</span>
+              )}
+            </div>
+          ))}
+
+          {!isLoading && (
+            <form onSubmit={handleSubmit} className="flex items-center">
+              <Prompt cwd={cwd} />
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="bg-transparent border-none text-ubuntu-text focus:outline-none w-full"
+                autoFocus
+                disabled={isLoading}
+                autoCapitalize="none"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+              />
+            </form>
+          )}
+          
+          <div ref={terminalEndRef} />
+        </div>
       </div>
     </div>
   );

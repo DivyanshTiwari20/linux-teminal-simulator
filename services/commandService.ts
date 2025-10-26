@@ -35,17 +35,24 @@ const getHelpMessage = () => `Locally supported commands:
   echo      Display a line of text
   neofetch  Show system information`;
 
-const getNeofetchOutput = () => `          "yyyy'
-      .oyyyy'       'yyyyyo.    user@webtop
-    .oyyyy'           'yyyyyo.   -----------
-  .oyyyy'               'yyyyyo. OS: Ubuntu 22.04.3 LTS x86_64
-.oyyyy'                   'yyyyyo. Host: Your Browser
-oyyyy'                     'yyyyyo Kernel: 6.x.x-generic
-'yyyyyo.                   .oyyyy' Uptime: a few minutes
-  'yyyyyo.               .oyyyy' Packages: 1337 (dpkg)
-    'yyyyyo.           .oyyyy'   Shell: bash 5.1.16
-      'yyyyyo.       .oyyyy'     Resolution: 1920x1080
-          'yyyy'   'yyyy'        Terminal: ReactTerm`;
+  const getNeofetchOutput = (): string => `
+  ________________________________________ 
+ ( Why do Chinese people like among us ?? )
+ ( That's the only place they can vote.)
+  ---------------------------------------- 
+         o   ^__^
+          o  (oo)\\_______
+             (__)\\       )\\/\\             user@webtop
+                 ||----w |                 -----------
+                 ||     ||                 OS: Ubuntu 22.04.3 LTS x86_64
+                                           Host: Your Browser
+                                           Kernel: 6.x.x-generic
+                                           Uptime: a few minutes
+                                           Packages: 1337 (dpkg)
+                                           Shell: bash 5.1.16
+                                           Resolution: 1920x1080
+                                           Terminal: ReactTerm
+ `;
 
 const resolvePath = (path: string, cwd: string[]): string[] => {
   if (path.startsWith('/')) {
