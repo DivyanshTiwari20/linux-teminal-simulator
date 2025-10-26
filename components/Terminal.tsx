@@ -114,7 +114,7 @@ const Terminal: React.FC<TerminalProps> = ({ history, isLoading, onCommandSubmit
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
-        <div className="text-gray-300 text-sm">linux@terminal: {getDisplayPath(cwd)} | by divyansh</div>
+        <div className="text-gray-300 text-sm">linux@terminal: {getDisplayPath(cwd)} | by divyansh.</div>
         <div className="w-16"></div>
       </div>
 
