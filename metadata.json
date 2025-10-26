@@ -1,0 +1,5 @@
+{
+  "name": "React Linux Terminal Simulator",
+  "description": "A web-based terminal simulator built with React and powered by the Gemini API. Practice Linux commands in a responsive, interactive environment that provides realistic, simulated command outputs.",
+  "requestFramePermissions": []
+}
