@@ -10,9 +10,10 @@ interface DockProps {
     onTerminalClick: () => void;
     openWindows: OpenWindow[];
     onWindowClick: (id: string) => void;
+    onMinesweeperClick?: () => void;
 }
 
-const Dock: React.FC<DockProps> = ({ onTerminalClick, openWindows }) => {
+const Dock: React.FC<DockProps> = ({ onTerminalClick, openWindows, onMinesweeperClick }) => {
     const hasOpenTerminal = openWindows.some(w => w.type === 'terminal');
 
     return (
@@ -44,35 +45,23 @@ const Dock: React.FC<DockProps> = ({ onTerminalClick, openWindows }) => {
                     {hasOpenTerminal && <div className="dock-indicator"></div>}
                 </div>
 
-                {/* Firefox (placeholder) */}
-                <div className="dock-item" title="Firefox">
-                    <div className="dock-icon firefox-icon">
-                        <svg viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="24" r="18" fill="url(#firefox-gradient)" />
-                            <path d="M24 8C15.163 8 8 15.163 8 24s7.163 16 16 16 16-7.163 16-16S32.837 8 24 8z" fill="url(#firefox-gradient2)" />
-                            <defs>
-                                <linearGradient id="firefox-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stopColor="#FF9500" />
-                                    <stop offset="100%" stopColor="#FF3D00" />
-                                </linearGradient>
-                                <linearGradient id="firefox-gradient2" x1="0%" y1="100%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#FF3D00" />
-                                    <stop offset="50%" stopColor="#FF9500" />
-                                    <stop offset="100%" stopColor="#FFCD02" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                    </div>
-                </div>
-
-                {/* Settings (placeholder) */}
-                <div className="dock-item" title="Settings">
-                    <div className="dock-icon settings-icon">
-                        <svg viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="24" r="16" fill="#555" />
-                            <circle cx="24" cy="24" r="8" fill="#888" />
-                            <path d="M24 4V10M24 38V44M44 24H38M10 24H4M38.14 9.86L33.9 14.1M14.1 33.9L9.86 38.14M38.14 38.14L33.9 33.9M14.1 14.1L9.86 9.86" stroke="#555" strokeWidth="4" strokeLinecap="round" />
-                        </svg>
+                {/* Minesweeper */}
+                <div
+                    className="dock-item"
+                    title="Minesweeper"
+                    onClick={onMinesweeperClick}
+                >
+                    <div className="dock-icon" style={{
+                        background: '#c0c0c0',
+                        borderRadius: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px',
+                        border: '2px solid',
+                        borderColor: '#ffffff #808080 #808080 #ffffff',
+                    }}>
+                        💣
                     </div>
                 </div>
 

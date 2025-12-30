@@ -212,7 +212,7 @@ body,
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 500;
+  z-index: 200;
   padding: 4px;
 }
 

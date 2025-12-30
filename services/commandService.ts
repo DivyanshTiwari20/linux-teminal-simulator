@@ -36,14 +36,12 @@ const getHelpMessage = () => `Locally supported commands:
   neofetch      Show system information
   
 Games (type to play):
-  snake         Play the classic Snake game
-  2048          Play 2048 number puzzle
-  guess         Number guessing game
-  tictactoe     Play Tic Tac Toe vs Computer
-  hangman       Play Hangman word game
+  minesweeper   Play the classic Minesweeper puzzle game
+  
+Fun commands:
   fortune       Get a random fortune
-  cowsay <msg>  Make a cow say something
-  cmatrix       Show Matrix-style animation`;
+  cowsay <msg>  Make a cow say something`;
+
 
 const getNeofetchOutput = (): string => `
   ________________________________________ 
@@ -102,189 +100,6 @@ ${bottom}
                 ||     ||`;
 };
 
-const getCmatrix = (): string => {
-  const chars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789';
-  let output = '\x1b[32m'; // Green color (may not work in all terminals)
-  for (let i = 0; i < 15; i++) {
-    let line = '';
-    for (let j = 0; j < 60; j++) {
-      line += chars[Math.floor(Math.random() * chars.length)];
-    }
-    output += line + '\n';
-  }
-  output += '\n[Press Ctrl+C to exit in a real terminal]\n';
-  output += 'Matrix simulation displayed. In real cmatrix, this runs continuously.';
-  return output;
-};
-
-const get2048 = (): string => {
-  // Generate a simple 2048 game state display
-  const emptyBoard = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0]
-  ];
-
-  // Add two random starting tiles
-  const positions = [];
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      positions.push([i, j]);
-    }
-  }
-
-  const pos1 = positions.splice(Math.floor(Math.random() * positions.length), 1)[0];
-  const pos2 = positions.splice(Math.floor(Math.random() * positions.length), 1)[0];
-
-  emptyBoard[pos1[0]][pos1[1]] = Math.random() < 0.9 ? 2 : 4;
-  emptyBoard[pos2[0]][pos2[1]] = Math.random() < 0.9 ? 2 : 4;
-
-  let output = `
-╔════════════════════════════════════════╗
-║              2048 GAME                 ║
-╠════════════════════════════════════════╣
-`;
-
-  for (const row of emptyBoard) {
-    output += '║  ';
-    for (const cell of row) {
-      const cellStr = cell === 0 ? '·' : cell.toString();
-      output += cellStr.padStart(4, ' ') + '  ';
-    }
-    output += '  ║\n';
-  }
-
-  output += `╠════════════════════════════════════════╣
-║  Use arrow keys to move tiles          ║
-║  Combine same numbers to reach 2048!   ║
-║  Score: 0                              ║
-╚════════════════════════════════════════╝
-
-Note: This is a display demo. Full interactive 2048 
-requires a dedicated game mode (coming soon!).
-Type 'help' for other commands.`;
-
-  return output;
-};
-
-const getGuessGame = (): string => {
-  const secretNumber = Math.floor(Math.random() * 100) + 1;
-  return `
-🎮 NUMBER GUESSING GAME
-═══════════════════════════════════════
-I'm thinking of a number between 1 and 100.
-
-The secret number is: ${secretNumber}
-
-In a full implementation, you would type guesses
-and I would tell you "higher" or "lower".
-
-Here's a hint: The number ${secretNumber > 50 ? 'is greater than 50' : 'is 50 or less'}.
-
-To play interactively, this would require game mode.
-For now, the answer was revealed above! 🎉
-
-Type 'help' for other commands.`;
-};
-
-const hangmanWords = ['javascript', 'terminal', 'ubuntu', 'linux', 'python', 'coding', 'developer', 'computer', 'keyboard', 'algorithm'];
-
-const getHangman = (): string => {
-  const word = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
-  const revealed = word.split('').map(() => '_').join(' ');
-
-  return `
-╔═══════════════════════════════════════╗
-║         HANGMAN WORD GAME             ║
-╠═══════════════════════════════════════╣
-║                                       ║
-║      ┌──────┐                         ║
-║      │      │                         ║
-║      │      O                         ║
-║      │     /|\\                        ║
-║      │     / \\                        ║
-║      │                                ║
-║   ═══╧═══                             ║
-║                                       ║
-║   Word: ${revealed.padEnd(25, ' ')} ║
-║   Letters guessed: none               ║
-║                                       ║
-║   Hint: It's a ${word.length}-letter word!         ║
-║   The word was: ${word.padEnd(21, ' ')} ║
-╚═══════════════════════════════════════╝
-
-Interactive mode coming soon!
-Type 'help' for other commands.`;
-};
-
-const getTicTacToe = (): string => {
-  const moves = ['X', 'O', 'X', 'O', 'X'];
-  const board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-
-  // Random X placement
-  const xPos = Math.floor(Math.random() * 9);
-  board[xPos] = 'X';
-
-  return `
-╔═══════════════════════════════════════╗
-║          TIC TAC TOE                  ║
-╠═══════════════════════════════════════╣
-║                                       ║
-║         ${board[0]} │ ${board[1]} │ ${board[2]}                     ║
-║        ───┼───┼───                    ║
-║         ${board[3]} │ ${board[4]} │ ${board[5]}                     ║
-║        ───┼───┼───                    ║
-║         ${board[6]} │ ${board[7]} │ ${board[8]}                     ║
-║                                       ║
-║   You are X, Computer is O            ║
-║   Enter position (1-9) to play        ║
-║                                       ║
-║   Position map:                       ║
-║    1 │ 2 │ 3                          ║
-║   ───┼───┼───                         ║
-║    4 │ 5 │ 6                          ║
-║   ───┼───┼───                         ║
-║    7 │ 8 │ 9                          ║
-║                                       ║
-╚═══════════════════════════════════════╝
-
-Interactive mode coming soon!
-Type 'help' for other commands.`;
-};
-
-const getSnake = (): string => {
-  return `
-╔═══════════════════════════════════════════════════╗
-║                   SNAKE GAME                      ║
-╠═══════════════════════════════════════════════════╣
-║                                                   ║
-║   ┌─────────────────────────────────────────┐     ║
-║   │ · · · · · · · · · · · · · · · · · · · · │     ║
-║   │ · · · · · · · · · · · · · · · · · · · · │     ║
-║   │ · · · · · · · · · · · · · · · · · · · · │     ║
-║   │ · · · · ████████ · · · · · · · · · · · │     ║
-║   │ · · · · · · · · · · · · · ● · · · · · · │     ║
-║   │ · · · · · · · · · · · · · · · · · · · · │     ║
-║   │ · · · · · · · · · · · · · · · · · · · · │     ║
-║   │ · · · · · · · · · · · · · · · · · · · · │     ║
-║   └─────────────────────────────────────────┘     ║
-║                                                   ║
-║   Controls: ↑ ↓ ← → (Arrow Keys)                  ║
-║   Score: 0  |  High Score: 42                     ║
-║   ● = Food  |  ████ = Snake                       ║
-║                                                   ║
-╚═══════════════════════════════════════════════════╝
-
-🐍 Welcome to Snake!
-Use arrow keys to control the snake.
-Eat the food (●) to grow longer.
-Don't hit the walls or yourself!
-
-Interactive game mode coming soon!
-Type 'help' for other commands.`;
-};
-
 
 const resolvePath = (path: string, cwd: string[]): string[] => {
   if (path.startsWith('/')) {
@@ -341,12 +156,8 @@ export const processCommand = async (
     // Games and fun commands
     case 'fortune': return { output: getFortune() };
     case 'cowsay': return { output: getCowsay(args.join(' ')) };
-    case 'cmatrix': return { output: getCmatrix() };
-    case 'snake': return { output: getSnake() };
-    case '2048': return { output: get2048() };
-    case 'guess': return { output: getGuessGame() };
-    case 'tictactoe': return { output: getTicTacToe() };
-    case 'hangman': return { output: getHangman() };
+    case 'minesweeper': return { output: '__OPEN_MINESWEEPER__' }; // Special marker to launch game
+
 
     case 'pwd':
       return { output: '/' + cwd.join('/') };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TerminalWindow from './TerminalWindow.tsx';
 import TopPanel from './TopPanel.tsx';
 import Dock from './Dock.tsx';
+import Minesweeper from './Minesweeper.tsx';
 
 interface OpenWindow {
     id: string;
@@ -16,6 +17,7 @@ interface OpenWindow {
 const Desktop: React.FC = () => {
     const [windows, setWindows] = useState<OpenWindow[]>([]);
     const [highestZIndex, setHighestZIndex] = useState(100);
+    const [showMinesweeper, setShowMinesweeper] = useState(false);
 
     const openTerminal = () => {
         const existingTerminal = windows.find(w => w.type === 'terminal' && w.isMinimized);
@@ -101,6 +103,22 @@ const Desktop: React.FC = () => {
                     </div>
                     <span className="desktop-icon-label">Terminal</span>
                 </div>
+
+                <div className="desktop-icon" onClick={() => setShowMinesweeper(true)}>
+                    <div className="desktop-icon-image" style={{
+                        background: '#c0c0c0',
+                        borderRadius: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '32px',
+                        border: '2px solid',
+                        borderColor: '#ffffff #808080 #808080 #ffffff',
+                    }}>
+                        💣
+                    </div>
+                    <span className="desktop-icon-label">Minesweeper</span>
+                </div>
             </div>
 
             {/* Windows */}
@@ -118,6 +136,7 @@ const Desktop: React.FC = () => {
                     onFocus={() => focusWindow(window.id)}
                     onPositionChange={(pos) => updateWindowPosition(window.id, pos)}
                     onSizeChange={(size) => updateWindowSize(window.id, size)}
+                    onOpenMinesweeper={() => setShowMinesweeper(true)}
                 />
             ))}
 
@@ -126,7 +145,13 @@ const Desktop: React.FC = () => {
                 onTerminalClick={openTerminal}
                 openWindows={windows}
                 onWindowClick={restoreWindow}
+                onMinesweeperClick={() => setShowMinesweeper(true)}
             />
+
+            {/* Minesweeper Game */}
+            {showMinesweeper && (
+                <Minesweeper onClose={() => setShowMinesweeper(false)} />
+            )}
         </div>
     );
 };

@@ -14,6 +14,7 @@ interface TerminalWindowProps {
     onFocus: () => void;
     onPositionChange: (pos: { x: number; y: number }) => void;
     onSizeChange: (size: { width: number; height: number }) => void;
+    onOpenMinesweeper?: () => void;
 }
 
 const initialMessages = [
@@ -63,6 +64,7 @@ const TerminalWindow: React.FC<TerminalWindowProps> = ({
     onFocus,
     onPositionChange,
     onSizeChange,
+    onOpenMinesweeper,
 }) => {
     const [history, setHistory] = useState<HistoryItem[]>(
         initialMessages.map((text, id) => ({ id, type: 'output', text }))
@@ -193,7 +195,13 @@ const TerminalWindow: React.FC<TerminalWindowProps> = ({
         try {
             const result = await processCommand(trimmedCommand, filesystem, cwd);
             if (result.output) {
-                addHistoryItem({ type: 'output', text: result.output });
+                // Check for special minesweeper marker
+                if (result.output === '__OPEN_MINESWEEPER__') {
+                    onOpenMinesweeper?.();
+                    addHistoryItem({ type: 'output', text: 'Launching Minesweeper game...' });
+                } else {
+                    addHistoryItem({ type: 'output', text: result.output });
+                }
             }
             if (result.newFs) {
                 setFilesystem(result.newFs);
